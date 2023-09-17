@@ -1,0 +1,177 @@
+/*footer*/
+#mainFooter {
+  clear: both;
+  width: 100%;
+  height: auto;
+  margin-bottom: 0px;
+  background-color: rgb(25, 28, 36);
+  box-shadow: 0px -5px 5px rgb(0, 0, 0, 0.2);
+  z-index: 99;
+}
+/* search bar */
+.search-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0px;
+}
+.search-container form {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+}
+.search-container form input {
+  width: 80%;
+  height: 40px;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  text-align: center;
+  font-weight: bolder;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  color: rgb(146, 154, 198);
+  border: 2px solid rgb(40, 45, 60);
+  background-color: rgb(25, 28, 36);
+}
+
+.search-container form button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 40px;
+  outline: none;
+  font-size: 20px;
+  padding: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: rgb(200, 200, 200);
+  font-weight: bolder;
+  border: 2px solid rgb(0, 107, 194);
+  background-color: rgb(0, 107, 194);
+  transition: all 0.3s linear;
+}
+
+.search-container form button i {
+  transition: all 0.3s linear;
+  margin: 0px;
+}
+.search-container form button:hover,
+.search-container form button:hover i {
+  color: rgb(255, 255, 255);
+  box-shadow: 0 0 5px rgba(0, 107, 194);
+}
+.search-container form input:focus {
+  font-weight: normal;
+  border-color: rgb(0, 107, 194);
+  box-shadow: 0 0 5px rgba(0, 107, 194);
+  color: rgb(146, 154, 198);
+}
+/* footer elements */
+#footerElements {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+}
+#footerElements a {
+  display: block;
+  font-weight: bolder;
+  text-decoration: none;
+  padding: 5px 10px;
+  color: rgb(146, 154, 198);
+  border: 2px solid rgb(146, 154, 198);
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  width: fit-content;
+  transition: all 0.5s linear;
+}
+#footerElements a:hover {
+  color: rgb(200, 170, 0);
+  border: 2px solid rgb(200, 170, 0);
+}
+#mainFooter #footerElements .contents h2 {
+  font-size: 18px;
+  color: rgb(100, 100, 100);
+}
+#mainFooter #footerElements .contents {
+  list-style-type: none;
+  text-align: center;
+  display: inline-block;
+  width: 12%;
+  margin: 30px;
+  line-height: 32px;
+  padding: 0px;
+  border-radius: 10px;
+}
+
+#mainFooter #footerElements ul li:hover a {
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+}
+
+#mainFooter #footerElements ul li a {
+  text-decoration: none;
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: 600;
+  color: rgb(200, 200, 200);
+  text-align: center;
+  text-transform: capitalize;
+}
+#mainFooter p {
+  clear: both;
+  font-size: 24px;
+  font-family: sans-serif;
+  font-weight: 600;
+  color: rgb(108, 114, 147);
+  background-color: rgb(0, 0, 0);
+  text-align: center;
+  text-transform: capitalize;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  margin: 0px;
+}
+
+#mainFooter .social-media-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+#mainFooter center h2 {
+  padding-top: 20px;
+  color: rgb(108, 114, 147);
+}
+#mainFooter .social-media-icons a {
+  width: 60px;
+  margin: 40px 40px;
+  color: rgb(146, 154, 198);
+  text-decoration: none;
+  line-height: 100px;
+}
+#mainFooter .social-media-icons a i {
+  font-size: 25px;
+  width: 50px;
+  margin: auto;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgb(146, 154, 198);
+  border-radius: 50%;
+  transition: all 0.5s linear;
+}
+#mainFooter .social-media-icons a:hover i {
+  transform: scale(1.3);
+  color: rgb(200, 170, 0);
+  border-color: rgb(200, 170, 0);
+  box-shadow: 0 0 5px rgb(200, 170, 0);
+}

@@ -1,2 +1,0 @@
-# coolmaths
- demo

@@ -1,0 +1,993 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: sans-serif;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap: none;
+  -webkit-tap-highlight: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  outline: none;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: rgb(0, 0, 0);
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  outline: 2px solid red;
+}
+body #readingMode2 {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 50;
+  cursor: pointer;
+}
+body #readingMode {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 4, 255, 0.205);
+  z-index: 40;
+}
+
+body #overlay,
+body #image-display-container {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(0, 0, 0);
+  z-index: 90;
+  overflow: hidden;
+}
+/* body #image-display-container {
+  background-color: rgb(0, 0, 0);
+} */
+#full-screen-image {
+  display: none;
+  position: fixed;
+  width: 80vw;
+  height: 80vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+#image-display-container .close-image {
+  font-size: 48px;
+  font-weight: bolder;
+  float: right;
+  margin: 5px;
+  margin-right: 15px;
+  color: rgb(108, 114, 147);
+  cursor: pointer;
+}
+#image-display-container .close-image:hover {
+  color: rgb(255, 255, 255);
+}
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgb(108, 114, 147);
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: rgb(108, 114, 147);
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: rgb(108, 114, 147);
+}
+
+::selection {
+  color: rgb(0, 0, 0);
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px rgb(0, 0, 0);
+  background-color: rgb(25, 28, 36);
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(43, 48, 65);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(15, 16, 21);
+}
+.gallery::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px rgb(0, 0, 0);
+  background-color: rgb(0, 157, 255);
+}
+.gallery::-webkit-scrollbar-thumb {
+  background-color: rgb(98, 192, 255);
+}
+.gallery::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(0, 100, 170);
+}
+/* navigation bar */
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 70px;
+  position: sticky;
+  top: 0px;
+  background-color: rgb(25, 28, 36);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+nav ul {
+  display: block;
+  width: 100%;
+  height: 50px;
+  list-style-type: none;
+  color: rgb(108, 114, 147);
+  text-transform: capitalize;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  padding: 0px;
+  margin: 0px;
+  float: left;
+}
+nav ul a {
+  display: inline-block;
+  font-size: 18px;
+  text-decoration: none;
+  color: rgb(108, 114, 147);
+  padding-bottom: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+nav ul a li i {
+  font-size: 25px;
+  color: rgb(108, 114, 147);
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+nav ul .userContainer {
+  width: 35px;
+  background-color: rgb(25, 28, 36);
+  height: 35px;
+  display: flex;
+  margin-right: 5px;
+  border-radius: 50%;
+  float: right;
+  margin-top: 8px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+nav ul i {
+  font-size: 25px;
+  color: rgb(108, 114, 147);
+  float: right;
+  cursor: pointer;
+  padding-bottom: 1px;
+  transition: all 0.5s linear;
+}
+nav ul a:hover i,
+nav ul .userContainer:hover i {
+  color: rgb(255, 255, 255);
+}
+nav ul a:hover i {
+  transform: translateY(-5px);
+}
+
+/*login or signup message */
+#overlay center .error {
+  display: none;
+  max-width: 300px;
+  margin-top: 3%;
+  font-family: sans-serif;
+  font-weight: bolder;
+  color: rgb(255, 180, 180);
+  background-color: rgb(130, 1, 1);
+  border: 1px solid rgb(70, 0, 0);
+  border-radius: 20px;
+  padding: 20px;
+}
+#overlay center .success {
+  display: none;
+  max-width: 300px;
+  margin-top: 3%;
+  font-family: sans-serif;
+  font-weight: bolder;
+  background-color: rgb(0, 130, 0);
+  border: 1px solid rgb(0, 70, 0);
+  color: rgb(180, 255, 180);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+/* logout form*/
+#logoutForm {
+  display: none;
+  text-align: center;
+  justify-content: center;
+  position: fixed;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  width: 300px;
+  border-radius: 5px;
+  background-color: rgb(25, 28, 36);
+  z-index: 99;
+  transition: all 0.5s linear;
+}
+#logoutForm .userContainer {
+  width: 100px;
+  background-color: rgb(40, 45, 60);
+  height: 100px;
+  display: flex;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+#logoutForm .userContainer:hover i {
+  color: rgb(255, 255, 255);
+}
+#logoutForm .userContainer i {
+  font-size: 75px;
+  color: rgb(108, 114, 147);
+  float: right;
+  cursor: pointer;
+  padding-bottom: 1px;
+}
+#logoutForm center > input {
+  display: none;
+}
+.headingContainer {
+  color: rgb(108, 114, 147);
+  margin: 0px;
+  max-width: 100%;
+  height: 27.2px;
+  background-color: rgb(40, 45, 60);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.headingContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.headingContainer > p {
+  cursor: pointer;
+  border-top-right-radius: 5px;
+  color: rgb(108, 114, 147);
+  font-family: sans-serif;
+  font-size: 16px;
+  margin: 5px;
+}
+
+#logoutForm div span {
+  cursor: pointer;
+  float: right;
+  border-top-right-radius: 5px;
+  padding: 2px 10px;
+  color: rgb(108, 114, 147);
+  font-family: sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+}
+#logoutForm div span:hover {
+  background: rgb(250, 30, 40);
+  color: rgb(255, 255, 255);
+}
+
+#logoutForm form label {
+  font-size: larger;
+  font-family: sans-serif;
+  color: rgb(200, 200, 200);
+  font-weight: 700px;
+}
+
+#logoutForm button {
+  display: inline-block;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+  font-family: sans-serif;
+  color: rgb(220, 220, 220);
+  border-radius: 20px;
+  width: 80%;
+  padding: 12px 20px;
+  margin: 20px 0;
+  border: none;
+  box-sizing: border-box;
+  background: linear-gradient(to right, rgb(255, 0, 0), rgb(255, 255, 0));
+  opacity: 0.8;
+  outline: none;
+  line-height: 25px;
+  transition: all 0.3s linear;
+}
+#logoutForm button:active {
+  transform: scale(0.95);
+}
+#logoutForm button:hover {
+  color: rgb(255, 255, 255);
+  opacity: 1;
+}
+
+/* login signup forgotPassword resetPassword Form*/
+#loginForm,
+#adminLoginForm,
+#signupForm,
+#forgotPassword,
+#resetPassword {
+  display: none;
+  text-align: center;
+  justify-content: center;
+  position: fixed;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  width: 300px;
+  border-radius: 5px;
+  background-color: rgb(25, 28, 36);
+  z-index: 99;
+}
+
+form .fa {
+  margin-left: 10px;
+  font-size: larger;
+  color: rgb(146, 154, 198);
+}
+#resetPassword {
+  height: 280px;
+}
+#forgotPassword {
+  height: 210px;
+}
+#forgotPassword #otpButton,
+#forgotPassword #otpInput {
+  display: none;
+}
+
+#adminLoginForm {
+  height: 430px;
+}
+#signupForm {
+  max-width: 500px;
+  height: 470px;
+}
+.headingContainer {
+  color: rgb(108, 114, 147);
+  margin: 0px;
+  max-width: 100%;
+  height: 27.2px;
+  background-color: rgb(40, 45, 60);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.headingContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.headingContainer > p {
+  cursor: pointer;
+  border-top-right-radius: 5px;
+  color: rgb(108, 114, 147);
+  font-family: sans-serif;
+  font-size: 16px;
+  margin: 5px;
+}
+
+#loginForm div span,
+#adminLoginForm div span,
+#signupForm div span,
+#forgotPassword div span,
+#resetPassword div span {
+  cursor: pointer;
+  float: right;
+  border-top-right-radius: 5px;
+  padding: 2px 10px;
+  color: rgb(108, 114, 147);
+  font-family: sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+}
+#loginForm div span:hover,
+#adminLoginForm div span:hover,
+#signupForm div span:hover,
+#forgotPassword div span:hover,
+#resetPassword div span:hover {
+  background: rgb(200, 0, 0);
+  color: rgb(255, 255, 255);
+}
+
+#loginForm input,
+#adminLoginForm input,
+#signupForm input,
+#forgotPassword input,
+#resetPassword input {
+  width: 80%;
+  font-size: 20px;
+  padding: 10px 10px;
+  margin: 10px 0;
+  display: inline-block;
+  border: none;
+  box-sizing: border-box;
+  outline: none;
+  background-color: transparent;
+  border-bottom: solid rgb(108, 114, 147);
+  color: rgb(146, 154, 198);
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+#loginForm input:focus,
+#adminLoginForm input:focus,
+#signupForm input:focus,
+#forgotPassword input:focus,
+#resetPassword input:focus {
+  border-bottom: solid rgb(190, 160, 0);
+}
+
+#loginForm button,
+#adminLoginForm button,
+#signupForm button,
+#forgotPassword button,
+#resetPassword button {
+  display: inline-block;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+  font-family: sans-serif;
+  color: rgb(230, 230, 230);
+  border-radius: 20px;
+  width: 80%;
+  padding: 12px 20px;
+  margin: 20px 0;
+  border: none;
+  box-sizing: border-box;
+  background: linear-gradient(to right, rgb(255, 0, 0), rgb(255, 255, 0));
+  opacity: 0.8;
+  outline: none;
+  line-height: 25px;
+  transition: all 0.3s linear;
+}
+#loginForm button:active,
+#adminLoginForm button:active,
+#signupForm button:active,
+#forgotPassword form button:active,
+#resetPassword button:active {
+  transform: scale(0.95);
+}
+#loginForm button:hover,
+#adminLoginForm button:hover,
+#signupForm button:hover,
+#forgotPassword button:hover,
+#resetPassword button:hover {
+  color: rgb(255, 255, 255);
+  opacity: 1;
+}
+
+#adminLoginForm #studentLogin,
+#loginForm #adminLogin,
+#loginForm #signup {
+  display: inline-flex;
+  width: 90px;
+  margin-top: 5px;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  color: rgb(146, 154, 198);
+  cursor: pointer;
+}
+
+#loginForm #forgot,
+#adminLoginForm label[for="login"],
+#loginForm label[for="login"],
+#loginForm label[for="signup"] {
+  font-family: sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  color: rgb(146, 154, 198);
+  cursor: pointer;
+  line-height: 32px;
+  transition: all 0.5s linear;
+}
+
+#loginForm #forgot,
+#loginForm #signup,
+#loginForm #adminLogin,
+#adminLoginForm #studentLogin {
+  color: rgb(200, 170, 0);
+  transition: all 0.5s linear;
+}
+
+#loginForm #forgot:hover,
+#loginForm #signup:hover,
+#loginForm #adminLogin:hover,
+#adminLoginForm #studentLogin:hover {
+  font-size: 17px;
+  color: rgb(255, 220, 0);
+}
+
+/*main*/
+#main {
+  width: 100%;
+  box-sizing: border-box;
+}
+/* header */
+
+#main header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(25, 28, 36);
+  height: 80px;
+}
+
+#main header a #img2 {
+  height: 70px;
+  width: 280px;
+}
+
+/*main contents*/
+
+#main-contents {
+  box-sizing: border-box;
+  margin-top: -5px;
+  width: 100%;
+}
+
+/* Cards */
+.main-contents-card {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  background-color: rgb(25, 28, 36);
+  color: rgb(108, 114, 147);
+  flex-wrap: wrap;
+  max-width: 95vw;
+  max-height: 100%;
+  margin: 3rem auto;
+  border-radius: 10px;
+}
+
+#coolmaths-classes .classes,
+#coolmaths-gallery .gallery,
+#coolmaths-services-books-products .service-books-products,
+#coolmaths-team .team {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  justify-content: center;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  background-color: rgb(13, 23, 33);
+  width: 100%;
+  height: 100%;
+}
+#coolmaths-gallery .gallery {
+  background-color: rgb(217, 238, 225);
+  direction: rtl;
+  width: 90%;
+  height: 600px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin: auto;
+  padding: 20px;
+  box-shadow: inset 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+}
+#coolmaths-team .team {
+  background-color: rgb(217, 238, 225);
+}
+
+#coolmaths-services-books-products .service-books-products {
+  background-color: rgb(100, 145, 145);
+}
+
+/* Cards */
+.coolmaths-class-card a,
+.services-books-products-card a {
+  text-decoration: none;
+  color: rgb(108, 114, 147);
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.services-books-products-card {
+  display: flex;
+  flex: 25%;
+  position: relative;
+  justify-content: center;
+  background-color: rgb(25, 28, 36);
+  color: rgb(108, 114, 147);
+  flex-wrap: wrap;
+  max-width: 25%;
+  height: 400px;
+  margin: 30px;
+  padding-bottom: 20px;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  overflow: hidden;
+}
+
+.coolmaths-class-card,
+.coolmaths-team-card {
+  display: flex;
+  flex: 70%;
+  position: relative;
+  justify-content: center;
+  background-color: rgb(25, 28, 36);
+  color: rgb(108, 114, 147);
+  flex-wrap: wrap;
+  max-width: 70%;
+  height: 400px;
+  margin: 30px;
+  padding-bottom: 20px;
+  box-shadow: 0px 0px 20px 0px rgb(0, 0, 0, 0.5);
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  overflow: hidden;
+  cursor: grab;
+}
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+.coolmaths-about-card {
+  display: block;
+  width: 90%;
+  height: 100%;
+  padding-bottom: 20px;
+  color: rgb(108, 114, 147);
+  background-color: transparent;
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  padding-bottom: 20px;
+}
+.about-content {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  justify-content: center;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  background-color: rgb(13, 23, 33);
+  width: 100%;
+  height: 100%;
+}
+.about-content div {
+  display: flex;
+  flex: 50%;
+  position: relative;
+  justify-content: center;
+  vertical-align: center;
+  background-color: transparent;
+  color: rgb(108, 114, 147);
+  flex-wrap: wrap;
+  max-width: 40%;
+  height: 100%;
+  margin: 30px;
+  padding-bottom: 20px;
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  overflow: hidden;
+}
+
+.about-content div h2,
+.about-content div p {
+  display: block;
+  word-spacing: 5px;
+  width: 100%;
+}
+.about-content div img {
+  width: 60px;
+  height: 60px;
+}
+.coolmaths-team-card center a {
+  display: block;
+  position: absolute;
+  border: none;
+  text-decoration: none;
+  font-weight: bolder;
+  outline: 0;
+  align-self: center;
+  margin: 10px auto;
+  bottom: 1rem;
+  left: 50%;
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  padding: 8px;
+  color: black;
+  background-color: rgb(108, 114, 147);
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 80%;
+  transition: all 0.5s linear;
+}
+
+.coolmaths-team-card center a:hover {
+  background-color: rgb(200, 170, 0);
+  color: white;
+}
+
+.coolmaths-class-card:active,
+.coolmaths-team-card:active {
+  cursor: grabbing;
+}
+.coolmaths-class-card img,
+.services-books-products-card img {
+  width: 100%;
+  height: 80%;
+}
+.coolmaths-team-card img {
+  width: 100%;
+  height: 60%;
+}
+.coolmaths-class-card:hover,
+.coolmaths-team-card:hover {
+  transform: translateY(-10px);
+  background-color: rgb(0, 0, 0);
+}
+.services-books-products-card:hover {
+  box-shadow: 0px 0px 10px 2px rgb(200, 170, 0);
+}
+.coolmaths-class-card:hover a,
+.services-books-products-card:hover a {
+  color: rgb(255, 255, 255);
+}
+.coolmaths-class-card a:hover,
+.services-books-products-card a:hover {
+  color: rgb(229, 255, 0);
+}
+.coolmaths-gallery-card {
+  display: flex;
+  flex: 25%;
+  position: relative;
+  justify-content: center;
+  background-color: rgb(217, 238, 225);
+  flex-wrap: wrap;
+  max-width: 25%;
+  max-height: 100%;
+  padding: 10px;
+  margin: 4%;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.coolmaths-gallery-card img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  transition: all 0.5s linear;
+}
+
+.coolmaths-gallery-card:hover img {
+  transform: scale(1.1);
+}
+
+/* slider */
+.slider-box {
+  max-width: 92vw;
+  max-height: calc(100vh - 180px);
+  position: relative;
+  overflow: hidden;
+  margin: 20px auto;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+#slider {
+  width: 92vw;
+  max-height: calc(100vh - 180px);
+  display: inline-flex;
+  transition: 0.7s;
+}
+
+#slider img {
+  width: 100%;
+}
+
+.indicators {
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  transform: translateX(-50%);
+}
+
+.indicators span {
+  display: inline-block;
+  margin-right: 2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: rgb(108, 114, 147);
+  cursor: pointer;
+}
+
+.active {
+  background: rgb(25, 28, 36) !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/*responsiveness*/
+
+@media only screen and (max-width: 2560px) {
+}
+
+@media only screen and (max-width: 800px) {
+  #left::-webkit-scrollbar {
+    width: 2px;
+  }
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  /* Cards */
+  .coolmaths-class-card,
+  .coolmaths-gallery-card,
+  .services-books-products-card {
+    flex: 40%;
+    flex-wrap: wrap;
+    max-width: 40%;
+    max-height: 100%;
+  }
+
+  #left,
+  #img1 {
+    display: none;
+  }
+  #mainFooter .social-media-icons a {
+    margin: 2rem 20px;
+  }
+
+  #mainFooter p {
+    font-size: 22px;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  #left::-webkit-scrollbar {
+    width: 1px;
+  }
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  /* Cards */
+  .coolmaths-class-card,
+  .coolmaths-gallery-card,
+  .services-books-products-card {
+    flex: 30%;
+    flex-wrap: wrap;
+    max-width: 30%;
+    max-height: 100%;
+  }
+
+  #mainFooter .social-media-icons a {
+    margin: 2rem 15px;
+  }
+
+  #main header #img2 {
+    transform: scale(0.9);
+  }
+  #mainFooter p {
+    font-size: 21px;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  #left::-webkit-scrollbar {
+    width: 1px;
+  }
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  /* Cards */
+  .coolmaths-class-card,
+  .coolmaths-gallery-card,
+  .services-books-products-card {
+    flex: 100%;
+    flex-wrap: wrap;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  #mainFooter .social-media-icons a {
+    transform: scale(0.9);
+    margin: 2rem 10px;
+  }
+
+  #main header #img2 {
+    transform: scale(0.8);
+  }
+  #mainFooter p {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  #left::-webkit-scrollbar {
+    width: 2px;
+  }
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  nav ul a {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  #mainFooter .social-media-icons a {
+    margin: 2rem 5px;
+    transform: scale(0.8);
+  }
+  #main header #img2 {
+    transform: scale(0.7);
+  }
+  #mainFooter p {
+    font-size: 19px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  #left::-webkit-scrollbar {
+    width: 2px;
+  }
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  nav ul a {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  #mainFooter .social-media-icons a {
+    margin: 2rem 0px;
+  }
+  #mainFooter p {
+    font-size: 18px;
+  }
+  #main header #img2 {
+    transform: scale(0.6);
+  }
+}
+/*responsiveness*/
+
+/* testing */
